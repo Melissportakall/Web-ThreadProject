@@ -1,0 +1,36 @@
+.sideMenu {
+    width: 25%;
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-left: 1px solid #ccc;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .sideMenu ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .sideMenu ul li {
+    margin: 10px 0;
+  }
+  
+  .button,
+  .link {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+  }
+  
+  .button:hover,
+  .link:hover {
+    background-color: #0056b3;
+  }
+  
