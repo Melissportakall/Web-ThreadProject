@@ -10,7 +10,8 @@ export const Urunler = () => {
       const response = await fetch('/tumurunler'); 
       if (response.ok) {  // Durum kodunu kontrol edin
         const data = await response.json();
-        setUrunler(data);
+        setUrunler(data.products);
+        console.log(data.products);
       } else {
         console.error('Veriler alınamadı:', response.statusText);
       }
@@ -24,20 +25,20 @@ export const Urunler = () => {
   }, []);
 
   const handleClick = (urun) => {
-    alert(`${urun.isim} tıklandı!`);
+    alert(`${urun.name} tıklandı!`);
   };
 
   return (
     <div className={styles.container}>
       {Array.isArray(urunler) && urunler.length > 0 ? (
-        urunler.map((urun) => (
+        urunler.map((product) => (
           <div
-            key={urun.id}
+            key={product.id}
             className={styles.card}
-            onClick={() => handleClick(urun)}
+            onClick={() => handleClick(product)}
           >
-            <h3 className={styles.name}>{urun.isim}</h3>
-            <p className={styles.price}>{urun.fiyat}</p>
+            <h3 className={styles.name}>{product.name}</h3>
+            <p className={styles.price}>{product.price} TL</p>
           </div>
         ))
       ) : (
