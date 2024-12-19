@@ -9,7 +9,9 @@ const MainMenu = () => {
     }, []);
 
   return (
+    
     <div className="main-menu">
+      
       <div className="sidebar">
         <SideMenu />
       </div>

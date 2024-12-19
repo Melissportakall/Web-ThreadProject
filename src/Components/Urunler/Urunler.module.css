@@ -25,3 +25,54 @@
   font-size: 16px;
   color: #555;
 }
+
+
+.quantityInputContainer {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.quantityInput {
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  font-size: 20px;
+  border: none;
+  outline: none;
+}
+
+.decrementButton, 
+.incrementButton {
+  background-color: transparent;
+  color:#345fef;
+  border: none;
+  cursor: pointer;
+  max-width:100px;
+  max-height: 100px;
+  padding: 4px;
+  font-size: 24px; 
+}
+
+.decrementButton:hover,
+.incrementButton:hover {
+  background-color: #f0f0f0;
+}
+
+.addToCartButton {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 8px;
+  width: 100%;
+  font-size: 24px; 
+}
+
+.addToCartButton:hover {
+  background-color: #0056b3;
+  
+}

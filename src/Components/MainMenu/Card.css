@@ -20,3 +20,9 @@
   flex-direction: column; /* Ürünleri dikey sıralar */
   justify-content: flex-start; /* Ürünler sol üstten başlasın */
 }
+.main-menu h1 {
+  font-size: 24px;
+  font-weight: bold;
+  color: black;
+  
+}
