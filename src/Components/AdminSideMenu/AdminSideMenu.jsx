@@ -6,7 +6,7 @@ import { AdminUrunEkle } from '../AdminUrunEkle/AdminUrunEkle';
 import { AdminMainMenu } from '../AdminMainMenu/AdminMainMenu';
 import { AdminUrunSil } from '../AdminUrunSil/AdminUrunSil';
 import { AdminStokGuncelle } from '../AdminStokGuncelle/AdminStokGuncelle';
-import { KayıtlıLoglar } from '../KayıtlıLoglar/KayıtlıLoglar';
+import { AdminLogs } from '../AdminLogs/AdminLogs';
 
 const SideMenu = () => {
     

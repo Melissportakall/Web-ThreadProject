@@ -7,9 +7,13 @@ import MainMenu from './Components/MainMenu/MainMenu';
 import AuthGuard from './Components/AuthGuard/AuthGuard';
 import { AdminMainMenu } from './Components/AdminMainMenu/AdminMainMenu.jsx';
 import AdminUrunEkle from './Components/AdminUrunEkle/AdminUrunEkle'
-import  AdminUrunSil  from './Components/AdminUrunSil/AdminUrunSil';
+import AdminUrunSil  from './Components/AdminUrunSil/AdminUrunSil';
 import AdminStokGuncelle from './Components/AdminStokGuncelle/AdminStokGuncelle';
-import KayıtlıLoglar from './Components/KayıtlıLoglar/KayıtlıLoglar';
+import AdminLogs from './Components/AdminLogs/AdminLogs'
+import Logs from './Components/Logs/Logs.jsx';
+import ViewProfile from './Components/ViewProfile/ViewProfile';
+import Cart from './Components/Cart/Cart';
+import MyOrders from './Components/MyOrders/MyOrders';
 
 function App() {
   useEffect(() => {
@@ -46,11 +50,15 @@ function App() {
             <AuthGuard>
               <Routes>
                 <Route path="/mainmenu" element={<MainMenu />} />
+                <Route path="/view-profile" element={<ViewProfile />} />
+                <Route path="/cart" element={<Cart />} />
+                <Route path="/my-orders" element={<MyOrders />} />
+                <Route path="/logs" element={<Logs />} />
                 <Route path="/admin-mainmenu" element={<AdminMainMenu />} />
                 <Route path="/admin-urunekle" element={<AdminUrunEkle />} />
                 <Route path="/admin-urunsil" element={<AdminUrunSil />} />
                 <Route path="/admin-stokguncelle" element={<AdminStokGuncelle />} />
-                <Route path="/admin-kayıtlıloglar" element={<KayıtlıLoglar />} />
+                <Route path="/admin-logs" element={<AdminLogs />} />
               </Routes>
             </AuthGuard>
           }
