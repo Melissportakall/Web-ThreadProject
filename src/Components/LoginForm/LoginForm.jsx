@@ -1,53 +1,76 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { FaUser, FaUnlockAlt } from "react-icons/fa";
 import styles from "./LoginForm.module.css";
+import { FaUser, FaUnlockAlt } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(false);
+  const [userData, setUserData] = useState("");
   const [error, setError] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
+
+  const clearSessionCookies = () => {
+    document.cookie = "user_data=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  };
 
   useEffect(() => {
     document.title = "Login";
   }, []);
 
+  useEffect(() => {
+    const cookies = document.cookie.split("; ").reduce((acc, cookie) => {
+      const [name, value] = cookie.split("=");
+      acc[name] = value;
+      return acc;
+    }, {});
+
+    if (cookies.remember_me === "true") {
+      if (userData.is_admin) {
+        navigate('/admin-mainmenu');
+      } else {
+        navigate('/mainmenu');
+      }
+    } else {
+      clearSessionCookies();
+    }
+  }, [navigate]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
-
     try {
+      const formData = {
+        username: username,
+        password: password,
+      };
 
       const response = await fetch("/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify(formData),
         credentials: "include",
       });
 
-
       const data = await response.json();
-
       if (data.success) {
         if (rememberMe) {
-          localStorage.setItem("rememberMe", "true");
-        } else {
-          localStorage.removeItem("rememberMe");
+          document.cookie = `remember_me=true; path=/; max-age=${60 * 60 * 24 * 30}`;
         }
+
+        setUserData(data);
 
         if (data.is_admin) {
           navigate('/admin-mainmenu');
         } else {
           navigate('/mainmenu');
         }
+
       } else {
         setError(data.message || "Invalid username or password");
       }
     } catch (error) {
       console.error("Error:", error);
-      setError("An error occurred. Please try again.");
     }
   };
 
@@ -107,4 +130,3 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
-
