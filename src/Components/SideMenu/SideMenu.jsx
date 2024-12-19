@@ -10,7 +10,7 @@ const SideMenu = () => {
 
     const handleLogout = () => {
         
-        navigate('/login'); 
+        navigate('/logout'); 
     };
   return (
     <div className={styles.sideMenu}>

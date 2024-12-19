@@ -14,6 +14,7 @@ import Logs from './Components/Logs/Logs.jsx';
 import ViewProfile from './Components/ViewProfile/ViewProfile';
 import Cart from './Components/Cart/Cart';
 import MyOrders from './Components/MyOrders/MyOrders';
+import LogOut from './Components/LogOut/LogOut';
 
 function App() {
   useEffect(() => {
@@ -59,6 +60,7 @@ function App() {
                 <Route path="/admin-urunsil" element={<AdminUrunSil />} />
                 <Route path="/admin-stokguncelle" element={<AdminStokGuncelle />} />
                 <Route path="/admin-logs" element={<AdminLogs />} />
+                <Route path="/logout" element={<LogOut />} />
               </Routes>
             </AuthGuard>
           }
