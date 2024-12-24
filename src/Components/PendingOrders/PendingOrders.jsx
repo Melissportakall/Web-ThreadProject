@@ -76,10 +76,10 @@ const PendingOrders = () => {
             <p>Durum: {order.OrderStatus}</p>
 
             <button className={styles.approveButton} onClick={() => handleApprove(order.OrderID)}>
-                ✔
+              ✔
             </button>
             <button className={styles.rejectButton} onClick={() => handleReject(order.OrderID)}>
-                ❌
+              X
             </button>
           </div>
         ))

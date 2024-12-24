@@ -14,6 +14,7 @@ import ViewProfile from './Components/ViewProfile/ViewProfile';
 import Cart from './Components/Cart/Cart';
 import MyOrders from './Components/MyOrders/MyOrders';
 import LogOut from './Components/LogOut/LogOut';
+import AdminAllCustomers from './Components/AdminAllCustomers/AdminAllCustomers';
 
 function App() {
   useEffect(() => {
@@ -55,6 +56,7 @@ function App() {
                 <Route path="/admin-mainmenu" element={<AdminMainMenu />} />
                 <Route path="/admin-urunekle" element={<AdminUrunEkle />} />
                 <Route path="/admin-all-products" element={<AdminAllProducts />} />
+                <Route path="/admin-all-customers" element={<AdminAllCustomers />} />
                 <Route path="/admin-logs" element={<AdminLogs />} />
 
                 <Route path="/logout" element={<LogOut />} />

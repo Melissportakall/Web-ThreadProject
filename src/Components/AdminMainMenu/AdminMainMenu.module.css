@@ -2,4 +2,59 @@
     font-size:15px;
     font-weight: 700;
     position: relative;
-}  
+}
+
+.buttonGroup {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    gap: 20px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    width: 350px;
+    height: 60px;
+}
+
+  .approveAllButton {
+    background-color: green;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .approveAllButton:hover {
+    background-color: darkgreen;
+    transform: scale(1.05);
+  }
+  
+  .approveAllButton:active {
+    transform: scale(0.95);
+  }
+  
+  .rejectAllButton {
+    background-color: red;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .rejectAllButton:hover {
+    background-color: darkred;
+    transform: scale(1.05);
+  }
+  
+  .rejectAllButton:active {
+    transform: scale(0.95);
+  }  
