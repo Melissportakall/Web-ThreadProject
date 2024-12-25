@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './PendingOrders.module.css';
 
-const PendingOrders = ({ refresh }) => {
+const PendingOrders = ({ refresh, setNoPendingOrders }) => {
   const [orders, setOrders] = useState([]);
 
   const fetchPendingOrders = async () => {
@@ -9,8 +9,10 @@ const PendingOrders = ({ refresh }) => {
       const response = await fetch('/get_pending_orders');
       if (response.ok) {
         const data = await response.json();
-        setOrders(data.orders);  // Sipariş verilerini güncelle
+        setOrders(data.orders);
         console.log('Ürünler alındı:', data);
+        
+        setNoPendingOrders(data.orders.length === 0);
       } else {
         console.error('Veriler alınamadı:', response.statusText);
       }
@@ -19,47 +21,9 @@ const PendingOrders = ({ refresh }) => {
     }
   };
 
-  const handleApprove = async (orderId) => {
-    try {
-      const response = await fetch(`/update_order_status/${orderId}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ status: 'Onaylandı' }),
-      });
-      if (response.ok) {
-        fetchPendingOrders();  // Siparişler onaylandığında yenileme
-      } else {
-        console.error('Sipariş onaylanamadı:', response.statusText);
-      }
-    } catch (error) {
-      console.error('Onaylama hatası:', error);
-    }
-  };
-
-  const handleReject = async (orderId) => {
-    try {
-      const response = await fetch(`/update_order_status/${orderId}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ status: 'Reddedildi' }),
-      });
-      if (response.ok) {
-        fetchPendingOrders();  // Sipariş reddedildiğinde yenileme
-      } else {
-        console.error('Sipariş reddedilemedi:', response.statusText);
-      }
-    } catch (error) {
-      console.error('Reddetme hatası:', error);
-    }
-  };
-
   useEffect(() => {
-    fetchPendingOrders();  // `refresh` değiştiğinde bu effect çalışacak
-  }, [refresh]);  // `refresh` prop'una bağlı olarak veriyi güncelle
+    fetchPendingOrders();
+  }, [refresh]);
 
   return (
     <div className={styles.container}>
@@ -75,10 +39,10 @@ const PendingOrders = ({ refresh }) => {
             <p>Tarih: {order.OrderDate}</p>
             <p>Durum: {order.OrderStatus}</p>
 
-            <button className={styles.approveButton} onClick={() => handleApprove(order.OrderID)}>
+            <button className={styles.approveButton}>
               ✔
             </button>
-            <button className={styles.rejectButton} onClick={() => handleReject(order.OrderID)}>
+            <button className={styles.rejectButton}>
               X
             </button>
           </div>

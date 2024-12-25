@@ -5,9 +5,15 @@ import styles from './AdminMainMenu.module.css';
 
 export const AdminMainMenu = () => {
   const [refreshOrders, setRefreshOrders] = useState(false);
+  const [noPendingOrders, setNoPendingOrders] = useState(false);
 
   const handleApproveAll = async () => {
     try {
+      if (noPendingOrders) {
+        alert('Beklemede olan sipariş bulunamadı.');
+        return;
+      }
+
       const response = await fetch('/update_all_orders', {
         method: 'PATCH',
         headers: {
@@ -18,7 +24,7 @@ export const AdminMainMenu = () => {
 
       if (response.ok) {
         console.log('Tüm siparişler onaylandı.');
-        setRefreshOrders((prev) => !prev);  // refreshOrders'ı güncelle
+        setRefreshOrders((prev) => !prev);
       } else {
         console.error('Tüm siparişler onaylanamadı:', response.statusText);
       }
@@ -29,6 +35,11 @@ export const AdminMainMenu = () => {
 
   const handleRejectAll = async () => {
     try {
+      if (noPendingOrders) {
+        alert('Beklemede olan sipariş bulunamadı.');
+        return;
+      }
+
       const response = await fetch('/update_all_orders', {
         method: 'PATCH',
         headers: {
@@ -39,7 +50,7 @@ export const AdminMainMenu = () => {
 
       if (response.ok) {
         console.log('Tüm siparişler reddedildi.');
-        setRefreshOrders((prev) => !prev);  // refreshOrders'ı güncelle
+        setRefreshOrders((prev) => !prev);
       } else {
         console.error('Tüm siparişler reddedilemedi:', response.statusText);
       }
@@ -63,7 +74,10 @@ export const AdminMainMenu = () => {
         </button>
       </div>
       <div className="orders" style={{ marginTop: '20px' }}>
-        <PendingOrders refresh={refreshOrders} />
+        <PendingOrders
+          refresh={refreshOrders}
+          setNoPendingOrders={setNoPendingOrders}
+        />
       </div>
     </div>
   );
