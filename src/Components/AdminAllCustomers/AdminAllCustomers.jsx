@@ -95,34 +95,38 @@ const AdminAllCustomers = () => {
               <h3>
                 {selectedCustomer.Name} {selectedCustomer.Surname} - Loglar
               </h3>
-              {logs.length > 0 ? (
-                <table className={styles.table}>
-                  <thead>
-                    <tr>
-                      <th>Log ID</th>
-                      <th>Müşteri ID</th>
-                      <th>Sipariş ID</th>
-                      <th>Tarih ve Saat</th>
-                      <th>Tür</th>
-                      <th>Detay</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {logs.map((log) => (
-                      <tr key={log.LogID}>
-                        <td>{log.LogID}</td>
-                        <td>{log.CustomerID}</td>
-                        <td>{log.OrderID}</td>
-                        <td>{log.LogDate}</td>
-                        <td>{log.LogType}</td>
-                        <td>{log.LogDetails}</td>
+              
+              <div className={styles.logList}>
+                {logs.length > 0 ? (
+                  <table className={styles.table}>
+                    <thead>
+                      <tr>
+                        <th>Log ID</th>
+                        <th>Müşteri ID</th>
+                        <th>Sipariş ID</th>
+                        <th>Tarih ve Saat</th>
+                        <th>Tür</th>
+                        <th>Detay</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              ) : (
-                <p>Bu müşteri için log bulunamadı.</p>
-              )}
+                    </thead>
+                    <tbody>
+                      {logs.map((log) => (
+                        <tr key={log.LogID}>
+                          <td>{log.LogID}</td>
+                          <td>{log.CustomerID}</td>
+                          <td>{log.OrderID}</td>
+                          <td>{log.LogDate}</td>
+                          <td>{log.LogType}</td>
+                          <td>{log.LogDetails}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                ) : (
+                  <p>Bu müşteri için log bulunamadı.</p>
+                )}
+              </div>
+              
               <button className={styles.closeButton} onClick={closeModal}>
                 Kapat
               </button>
