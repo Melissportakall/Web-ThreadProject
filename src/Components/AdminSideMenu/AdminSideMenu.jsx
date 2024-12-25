@@ -18,7 +18,6 @@ const SideMenu = () => {
                  <li><Link to="/admin-mainmenu" className={styles.link}>Ana Sayfa</Link></li>
                 <li><Link to="/admin-all-customers" className={styles.link}>Tüm Kullanıcılar</Link></li>
                 <li><Link to="/admin-all-products" className={styles.link}>Tüm Ürünler</Link></li>
-                <li><Link to="/admin-urunekle" className={styles.link}>Ürün Ekleme</Link></li>
                 <li><Link to="/admin-logs" className={styles.link}>Kayıtlı Loglar</Link></li>
                 <li>
                     <button onClick={handleLogout} className={styles.button}>Log Out</button>

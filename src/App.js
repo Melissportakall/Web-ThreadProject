@@ -6,7 +6,6 @@ import RegisterForm from './Components/LoginRegister/RegisterForm';
 import MainMenu from './Components/MainMenu/MainMenu';
 import AuthGuard from './Components/AuthGuard/AuthGuard';
 import { AdminMainMenu } from './Components/AdminMainMenu/AdminMainMenu.jsx';
-import AdminUrunEkle from './Components/AdminUrunEkle/AdminUrunEkle'
 import AdminAllProducts from './Components/AdminAllProducts/AdminAllProducts';
 import AdminLogs from './Components/AdminLogs/AdminLogs'
 import Logs from './Components/Logs/Logs.jsx';
@@ -54,7 +53,6 @@ function App() {
                 <Route path="/my-orders" element={<MyOrders />} />
                 <Route path="/logs" element={<Logs />} />
                 <Route path="/admin-mainmenu" element={<AdminMainMenu />} />
-                <Route path="/admin-urunekle" element={<AdminUrunEkle />} />
                 <Route path="/admin-all-products" element={<AdminAllProducts />} />
                 <Route path="/admin-all-customers" element={<AdminAllCustomers />} />
                 <Route path="/admin-logs" element={<AdminLogs />} />

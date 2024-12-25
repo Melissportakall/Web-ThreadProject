@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './PendingOrders.module.css';
 
-const PendingOrders = () => {
+const PendingOrders = ({ refresh }) => {
   const [orders, setOrders] = useState([]);
 
   const fetchPendingOrders = async () => {
@@ -9,7 +9,7 @@ const PendingOrders = () => {
       const response = await fetch('/get_pending_orders');
       if (response.ok) {
         const data = await response.json();
-        setOrders(data.orders);
+        setOrders(data.orders);  // Sipariş verilerini güncelle
         console.log('Ürünler alındı:', data);
       } else {
         console.error('Veriler alınamadı:', response.statusText);
@@ -29,7 +29,7 @@ const PendingOrders = () => {
         body: JSON.stringify({ status: 'Onaylandı' }),
       });
       if (response.ok) {
-        fetchPendingOrders();
+        fetchPendingOrders();  // Siparişler onaylandığında yenileme
       } else {
         console.error('Sipariş onaylanamadı:', response.statusText);
       }
@@ -48,7 +48,7 @@ const PendingOrders = () => {
         body: JSON.stringify({ status: 'Reddedildi' }),
       });
       if (response.ok) {
-        fetchPendingOrders();
+        fetchPendingOrders();  // Sipariş reddedildiğinde yenileme
       } else {
         console.error('Sipariş reddedilemedi:', response.statusText);
       }
@@ -58,8 +58,8 @@ const PendingOrders = () => {
   };
 
   useEffect(() => {
-    fetchPendingOrders();
-  }, []);
+    fetchPendingOrders();  // `refresh` değiştiğinde bu effect çalışacak
+  }, [refresh]);  // `refresh` prop'una bağlı olarak veriyi güncelle
 
   return (
     <div className={styles.container}>

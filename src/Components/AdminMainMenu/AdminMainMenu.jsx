@@ -18,7 +18,7 @@ export const AdminMainMenu = () => {
 
       if (response.ok) {
         console.log('Tüm siparişler onaylandı.');
-        setRefreshOrders((prev) => !prev);
+        setRefreshOrders((prev) => !prev);  // refreshOrders'ı güncelle
       } else {
         console.error('Tüm siparişler onaylanamadı:', response.statusText);
       }
@@ -39,7 +39,7 @@ export const AdminMainMenu = () => {
 
       if (response.ok) {
         console.log('Tüm siparişler reddedildi.');
-        setRefreshOrders((prev) => !prev);
+        setRefreshOrders((prev) => !prev);  // refreshOrders'ı güncelle
       } else {
         console.error('Tüm siparişler reddedilemedi:', response.statusText);
       }

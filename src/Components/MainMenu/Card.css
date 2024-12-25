@@ -1,24 +1,24 @@
 .main-menu {
-  display: flex; /* Yatay esnek düzen */
-  height: 100vh; /* Ekranın tamamını kaplasın */
+  display: flex;
+  height: 100vh;
 }
 
 .sidebar {
-  width: 20%; /* Sidebar genişliği */
-  height: 100%; /* Sidebar tam yüksekliği */
-  position: fixed; /* Sidebar sabit kalsın */
-  top: 0; /* Ekranın en üst kısmında başlasın */
-  left: 0; /* Ekranın en sol kısmında */
+  width: 20%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
   padding: 0px;
 }
 
 .products {
-  margin-left: 20%; /* Sidebar genişliği kadar soldan boşluk bırak */
-  height: 100vh; /* Ürünlerin olduğu alanın yüksekliği ekran kadar */
-  overflow-y: auto; /* Ürünler scroll içinde olacak */
+  margin-left: 20%;
+  height: 100vh;
+  overflow-y: auto;
   display: flex;
-  flex-direction: column; /* Ürünleri dikey sıralar */
-  justify-content: flex-start; /* Ürünler sol üstten başlasın */
+  flex-direction: column;
+  justify-content: flex-start;
 }
 .main-menu h1 {
   font-size: 24px;
