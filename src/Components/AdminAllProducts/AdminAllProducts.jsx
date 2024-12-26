@@ -157,29 +157,29 @@ export const Urunler = () => {
       </div>
       <div className="products">
         <div className={styles.container}>
-          {Array.isArray(urunler) && urunler.length > 0 ? (
-            urunler.map((product) => (
-              <div key={product.id} className={styles.card}>
-                <h3 className={styles.name}>{product.name}</h3>
-                <p className={styles.price}>{product.price} TL</p>
-                <p className={styles.stock}>{product.stock} Adet</p>
-
-                <div className={styles.deleteIcon} onClick={() => openDeleteModal(product)}>🗑️</div>
-                <div className={styles.editIcon} onClick={() => openModal(product)}>✏️</div>
-              </div>
-            ))
-          ) : (
-            <p>No products found.</p>
-          )}
           <div className={styles.card} onClick={handleAddProduct} style={{ cursor: 'pointer' }}>
-            <div className={styles['image-container']}>
-              <img
-                src="https://img.icons8.com/m_rounded/512/plus.png"
-                alt="Add Product"
-                className={styles.addProductIcon}
-              />
+              <div className={styles['image-container']}>
+                <img
+                  src="https://img.icons8.com/m_rounded/512/plus.png"
+                  alt="Add Product"
+                  className={styles.addProductIcon}
+                />
+              </div>
             </div>
-          </div>
+            {Array.isArray(urunler) && urunler.length > 0 ? (
+              urunler.map((product) => (
+                <div key={product.id} className={styles.card}>
+                  <h3 className={styles.name}>{product.name}</h3>
+                  <p className={styles.price}>{product.price} TL</p>
+                  <p className={styles.stock}>{product.stock} Adet</p>
+
+                  <div className={styles.deleteIcon} onClick={() => openDeleteModal(product)}>🗑️</div>
+                  <div className={styles.editIcon} onClick={() => openModal(product)}>✏️</div>
+                </div>
+              ))
+            ) : (
+              <p>No products found.</p>
+            )}
         </div>
       </div>
 

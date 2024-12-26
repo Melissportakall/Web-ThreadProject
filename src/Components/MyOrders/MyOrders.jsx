@@ -4,7 +4,7 @@ import { io } from 'socket.io-client';
 import orderStyles from '../AdminLogs/AdminLogs.module.css';
 import SideMenu from '../SideMenu/SideMenu';
 
-const socket = io('http://localhost:3000'); // Backend'in adresini yazın
+const socket = io('http://127.0.0.1:5000');
 
 const MyOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -15,10 +15,10 @@ const MyOrders = () => {
 
   const openModal = (order) => {
     setSelectedOrder(order);
-    setProgress(0); // Yeni sipariş için progress sıfırlanır
+    setProgress(0);
     setModalIsOpen(true);
-    console.log('Requesting order status for gönderdik orderidyi:', order.OrderID); // Debug log
-    socket.emit('order_status', { order_id: order.OrderID }); // WebSocket ile sipariş durumu talebi
+    console.log('Requesting order status for:', order.OrderID);
+    socket.emit('order_status', { order_id: order.OrderID });
   };
 
   const closeModal = () => {
@@ -26,24 +26,25 @@ const MyOrders = () => {
     setSelectedOrder(null);
     setProgress(0);
   };
-  socket.on('connect', () => {
-    console.log('Connected to WebSocket server!');
-  });
-  
-  socket.on('disconnect', () => {
-    console.log('Disconnected from WebSocket server!');
-  });
 
-  socket.on('order_updated', (data) => {
-    console.log('Order updated:', data);
-    if (selectedOrder && data.order_id === selectedOrder.OrderID) {
-      setProgress((prev) => Math.min(prev + 20, 100)); // Progress bar'ı güncelle
-      if (data.status === 'Completed') {
-        setProgress(100); // İşlem tamamlandı
+  useEffect(() => {
+    const handleOrderUpdate = (data) => {
+      console.log('Order update received:', data);
+      if (selectedOrder && data.order_id === selectedOrder.OrderID) {
+        setProgress(data.progress);
+        if (data.status === 'Completed') {
+          setProgress(100);
+        }
       }
-    }
-  });
-  
+    };
+
+    socket.on('order_updated', handleOrderUpdate);
+
+    return () => {
+      socket.off('order_updated', handleOrderUpdate);
+    };
+  }, [selectedOrder]);
+
   useEffect(() => {
     if (customerId) {
       fetch(`/orders/${customerId}`)
@@ -51,35 +52,10 @@ const MyOrders = () => {
         .then((data) => setOrders(data.orders))
         .catch((error) => console.error('Error fetching orders:', error));
     }
-  
-    const handleOrderUpdate = (data) => {
-      console.log('Order update received:', data);
-      if (selectedOrder && data.order_id === selectedOrder.OrderID) {
-        setProgress((prev) => {
-          const newProgress = Math.min(prev + 20, 100);
-          console.log(`Updated progress: ${newProgress}%`); // Yeni progress değerini konsola yazdır
-          return newProgress;
-        });
-        if (data.status === 'Completed') {
-          setProgress(100); // İşlem tamamlandı
-        }
-      }
-    };
-  
-    socket.on('order_updated', handleOrderUpdate);
-    socket.on('order_error', (error) => {
-      console.error('Error from WebSocket:', error);
-      alert(`WebSocket Error: ${error}`);
-    });
-  
-    return () => {
-      socket.off('order_updated', handleOrderUpdate); // Temizleme
-      socket.off('order_error');
-    };
-  }, [customerId, selectedOrder]);
-  
+  }, [customerId]);
+
   return (
-    <div className='my-orders'>
+    <div className="my-orders">
       <h1>THREADYOL</h1>
       <div className="sidebar">
         <SideMenu />
@@ -129,6 +105,8 @@ const MyOrders = () => {
             style={{
               width: `${progress}%`,
               backgroundColor: progress === 100 ? 'green' : 'blue',
+              height: '20px',
+              transition: 'width 0.5s ease-in-out',
             }}
           >
             {progress}%
