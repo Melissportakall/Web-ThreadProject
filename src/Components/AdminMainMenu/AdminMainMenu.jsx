@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import AdminSideMenu from '../AdminSideMenu/AdminSideMenu';
 import PendingOrders from '../PendingOrders/PendingOrders';
+import AdminDynamicLog from '../AdminDynamicLog/AdminDynamicLog';
 import styles from './AdminMainMenu.module.css';
 
 export const AdminMainMenu = () => {
@@ -60,24 +61,29 @@ export const AdminMainMenu = () => {
   };
 
   return (
-    <div className="admin-main-menu">
-      <h1>THREADYOL</h1>
-      <div className="sidebar">
+    <div className="admin-main-menu" style={{ display: 'flex', height: '100vh' }}>
+      <div className="sidebar" style={{ width: '250px' }}>
         <AdminSideMenu />
       </div>
-      <div className={styles.buttonGroup}>
-        <button className={styles.approveAllButton} onClick={handleApproveAll}>
-          Tümünü Onayla
-        </button>
-        <button className={styles.rejectAllButton} onClick={handleRejectAll}>
-          Tümünü Reddet
-        </button>
+      <div className="content" style={{ flex: 1, padding: '20px' }}>
+        <h1>THREADYOL</h1>
+        <div className={styles.buttonGroup}>
+          <button className={styles.approveAllButton} onClick={handleApproveAll}>
+            Tümünü Onayla
+          </button>
+          <button className={styles.rejectAllButton} onClick={handleRejectAll}>
+            Tümünü Reddet
+          </button>
+        </div>
+        <div className="orders" style={{ marginTop: '20px' }}>
+          <PendingOrders
+            refresh={refreshOrders}
+            setNoPendingOrders={setNoPendingOrders}
+          />
+        </div>
       </div>
-      <div className="orders" style={{ marginTop: '20px' }}>
-        <PendingOrders
-          refresh={refreshOrders}
-          setNoPendingOrders={setNoPendingOrders}
-        />
+      <div className="">
+        <AdminDynamicLog />
       </div>
     </div>
   );
