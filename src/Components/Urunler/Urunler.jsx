@@ -66,7 +66,7 @@ export const Urunler = () => {
   const handleQuantityChange = (id, value) => {
     setQuantities((prev) => ({
       ...prev,
-      [id]: value > 0 ? value : 1, // Negatif veya sıfır değerleri önle
+      [id]: value > 0 ? value : 1, 
     }));
   };
 
@@ -89,7 +89,7 @@ export const Urunler = () => {
           >
             <h3 className={styles.name}>{product.name}</h3>
             <p className={styles.price}>{product.price} TL</p>
-            {/* Adet Giriş Alanı Artı/Eksi Butonları ile */}
+            
             <div className={styles.quantityInputContainer}>
               <button
                 className={styles.decrementButton}
@@ -118,11 +118,11 @@ export const Urunler = () => {
                 +
               </button>
             </div>
-            {/* Sepete Ekle Butonu */}
+            
             <button
               className={styles.addToCartButton}
               onClick={(e) => {
-                e.stopPropagation(); // Kartın tıklanma olayını engelle
+                e.stopPropagation();
                 handleAddToCart(product);
               }}
             >

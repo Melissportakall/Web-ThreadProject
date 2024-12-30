@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './Modal.css'; // Modal için basit stil dosyası
+import './Modal.css'; 
 
 const Modal = ({ isOpen, onClose, orderStatus }) => {
   if (!isOpen) return null;

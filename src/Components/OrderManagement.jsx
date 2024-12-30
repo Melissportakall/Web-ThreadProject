@@ -8,7 +8,7 @@ const OrderManagement = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch products and user type when component mounts
+    
     fetchProducts();
     fetchUserType();
   }, []);

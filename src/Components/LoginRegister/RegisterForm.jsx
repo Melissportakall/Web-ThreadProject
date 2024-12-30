@@ -84,7 +84,7 @@ const RegisterForm = ({ toggleForm }) => {
                 Registration
               </h1>
               <div className={styles.input_group}>
-                {/* Sol Sütun */}
+                
                 <div className={styles.input_box}>
                   <input 
                     type="text" 
@@ -117,7 +117,7 @@ const RegisterForm = ({ toggleForm }) => {
                 </div>
                 
       
-                {/* Sağ Sütun */}
+                
                 
                 <div className={styles.input_box}>
                   <input 
@@ -141,7 +141,7 @@ const RegisterForm = ({ toggleForm }) => {
                   <FaUnlockAlt className={styles.icon} />
                 </div>
       
-                {/* Adres ve İlgi Alanları */}
+                
                 <div className={styles.input_box}>
                   <input 
                     type="text" 

@@ -1,14 +1,14 @@
 .logs {
-    display: flex; /* Yatay esnek düzen */
-    height: 100vh; /* Ekranın tamamını kaplasın */
+    display: flex;
+    height: 100vh;
   }
   
   .sidebar {
-    width: 20%; /* Sidebar genişliği */
-    height: 100%; /* Sidebar tam yüksekliği */
-    position: fixed; /* Sidebar sabit kalsın */
-    top: 0; /* Ekranın en üst kısmında başlasın */
-    left: 0; /* Ekranın en sol kısmında */
+    width: 20%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
     padding: 0px;
   }
   

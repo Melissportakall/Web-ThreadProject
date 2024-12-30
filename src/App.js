@@ -1,4 +1,4 @@
-// App.js
+
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import LoginForm from './Components/LoginForm/LoginForm.jsx';
@@ -70,4 +70,4 @@ function App() {
 export default App;
 
 
-//npx react-scripts start -> kodu bu şekilde çalıştırıcam yoksa hata alıyorum !!!!!!!
+

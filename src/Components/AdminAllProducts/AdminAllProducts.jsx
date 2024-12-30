@@ -183,7 +183,7 @@ export const Urunler = () => {
         </div>
       </div>
 
-      {/* Modal */}
+     
       {isModalOpen && (
         <div className={styles.modal} onClick={closeModal}>
           <div
@@ -215,7 +215,7 @@ export const Urunler = () => {
         </div>
       )}
 
-      {/* Delete Product Modal */}
+      
       {isDeleteModalOpen && (
         <div className={styles.modal} onClick={closeDeleteModal}>
           <div
@@ -229,7 +229,7 @@ export const Urunler = () => {
         </div>
       )}
 
-      {/* Modal for adding new product */}
+      
       {isNewProductModalOpen && (
         <div className={styles.modal} onClick={closeNewProductModal}>
           <div
