@@ -4,7 +4,7 @@ import { io } from 'socket.io-client';
 import orderStyles from '../AdminLogs/AdminLogs.module.css';
 import SideMenu from '../SideMenu/SideMenu';
 
-const socket = io('http://127.0.0.1:3000');
+const socket = io('http://127.0.0.1:5000');
 
 const MyOrders = () => {
   const [orders, setOrders] = useState([]);

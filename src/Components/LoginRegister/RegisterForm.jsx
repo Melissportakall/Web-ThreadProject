@@ -32,17 +32,18 @@ const RegisterForm = ({ toggleForm }) => {
     const handleSubmit = async (e) => {
       e.preventDefault();
       try {
-          const usersResponse = await fetch('/get_all_users'); 
+          const usersResponse = await fetch('/all-customers'); 
           const usersData = await usersResponse.json();
   
           if (!usersData.success) {
+              console.log(usersData.customers)
               alert("Kullanıcıları alırken bir hata oluştu.");
               return;
           }
   
-          const existingUser = usersData.users.find(user => 
-              user.kullanici_adi === formData.username || 
-              user.telefon_no === formData.phonenumber
+          const existingUser = usersData.customers.find(customers => 
+            customers.Username === formData.username || 
+            customers.PhoneNumber === formData.phonenumber
           );
   
           if (existingUser) {
