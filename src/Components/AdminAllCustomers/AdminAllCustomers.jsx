@@ -85,7 +85,7 @@ const AdminAllCustomers = () => {
           )}
         </div>
         
-        {/* Modal */}
+        
         {isModalOpen && (
           <div className={styles.modal} onClick={closeModal}>
             <div

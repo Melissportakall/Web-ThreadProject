@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Urunler.module.css';
+import { Chart, registerables } from 'chart.js';
+import { Bar } from 'react-chartjs-2';
 
+Chart.register(...registerables);
 const getUserDataFromCookies = () => {
   const cookies = document.cookie.split('; ');
   for (let cookie of cookies) {
@@ -78,63 +81,87 @@ export const Urunler = () => {
     
   };
 
+  const chartData = {
+    labels: urunler.map((product) => product.name),
+    datasets: [
+      {
+        label: 'Stok Miktarı',
+        data: urunler.map((product) => product.stock),
+        backgroundColor: 'rgba(75,192,192,0.6)',
+      },
+    ],
+  };
+
   return (
-    <div className={styles.container}>
-      {Array.isArray(urunler) && urunler.length > 0 ? (
-        urunler.map((product) => (
-          <div
-            key={product.id}
-            className={styles.card}
-            onClick={() => handleClick(product)}
-          >
-            <h3 className={styles.name}>{product.name}</h3>
-            <p className={styles.price}>{product.price} TL</p>
-            
-            <div className={styles.quantityInputContainer}>
+    <div>
+      
+      <div className={styles.container}>
+        {Array.isArray(urunler) && urunler.length > 0 ? (
+          urunler.map((product) => (
+            <div
+              key={product.id}
+              className={styles.card}
+              onClick={() => console.log(product)}
+            >
+              <h3 className={styles.name}>{product.name}</h3>
+              <p className={styles.price}>{product.price} TL</p>
+
+              <div className={styles.quantityInputContainer}>
+                <button
+                  className={styles.decrementButton}
+                  onClick={() =>
+                    handleQuantityChange(product.id, (quantities[product.id] || 1) - 1)
+                  }
+                >
+                  -
+                </button>
+                <input
+                  type="number"
+                  className={styles.quantityInput}
+                  min="1"
+                  value={quantities[product.id] || 1}
+                  onChange={(e) =>
+                    handleQuantityChange(product.id, parseInt(e.target.value))
+                  }
+                  placeholder="Adet"
+                />
+                <button
+                  className={styles.incrementButton}
+                  onClick={() =>
+                    handleQuantityChange(product.id, (quantities[product.id] || 1) + 1)
+                  }
+                >
+                  +
+                </button>
+              </div>
+
               <button
-                className={styles.decrementButton}
-                onClick={() =>
-                  handleQuantityChange(product.id, (quantities[product.id] || 1) - 1)
-                }
+                className={styles.addToCartButton}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleAddToCart(product);
+                }}
               >
-                -
-              </button>
-              <input
-                type="number"
-                className={styles.quantityInput}
-                min="1"
-                value={quantities[product.id] || 1}
-                onChange={(e) =>
-                  handleQuantityChange(product.id, parseInt(e.target.value))
-                }
-                placeholder="Adet"
-              />
-              <button
-                className={styles.incrementButton}
-                onClick={() =>
-                  handleQuantityChange(product.id, (quantities[product.id] || 1) + 1)
-                }
-              >
-                +
+                Sipariş Ver
               </button>
             </div>
-            
-            <button
-              className={styles.addToCartButton}
-              onClick={(e) => {
-                e.stopPropagation();
-                handleAddToCart(product);
-              }}
-            >
-              Sipariş Ver
-            </button>
-          </div>
-        ))
-      ) : (
-        <p>No products found.</p>
+          ))
+        ) : (
+          <p>No products found.</p>
+        )}
+      </div>
+
+      
+      {urunler.length > 0 && (
+        <div className={styles.chartContainer}>
+          <h2>Stok Durumu</h2>
+          <Bar data={chartData}  />
+        </div>
       )}
     </div>
   );
 };
+
+
 
 export default Urunler;

@@ -6,7 +6,7 @@ const AdminDynamicLog = () => {
   const [logs, setLogs] = useState([]);
   
   useEffect(() => {
-    const socket = io('http://127.0.0.1:5000');
+    const socket = io('http://127.0.0.1:3000');
 
     socket.on('connect', () => {
       console.log('WebSocket bağlantısı kuruldu.');
