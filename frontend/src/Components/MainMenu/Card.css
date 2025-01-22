@@ -1,0 +1,28 @@
+.main-menu {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 20%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 0px;
+}
+
+.products {
+  margin-left: 20%;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.main-menu h1 {
+  font-size: 24px;
+  font-weight: bold;
+  color: black;
+  
+}

@@ -1,0 +1,99 @@
+.container {
+    margin-top: 60px;
+    margin-left: 350px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    position: relative;
+    max-width: calc(100% - 350px);
+    min-height: 100vh;
+    box-sizing: border-box;
+  }
+  
+  .card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    width: 200px;
+    height: 250px;
+    background-color: #f9f9f9;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+    cursor: default ;
+  }
+  
+  .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .card h3 {
+    margin: 0;
+    color: #333;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  
+  .card p {
+    margin: 8px 0;
+    color: #555;
+    font-size: 0.9rem;
+  }
+
+  .rejectButton {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: red;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 18px;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.3s ease;
+  }
+  
+  .card:hover .rejectButton {
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  .rejectButton:hover {
+    cursor: pointer;
+  }
+  
+  .approveButton {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background-color: green;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 18px;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.3s ease;
+  }
+  
+  .card:hover .approveButton {
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  .approveButton:hover {
+    cursor: pointer;
+  }
