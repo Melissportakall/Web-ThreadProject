@@ -27,6 +27,8 @@ tamamlandıktan sonra işlem sırasına girer.
 müşteriler arasında uygun bir işlem sırası sağlanmalıdır.
 ● Her müşteri, belirli bir veya birden fazla ürün çeşidini satın almak için başvurabilir.
 ● Bir müşteri, her üründen en fazla 5 adet satın alabilir.
+
+
 Admin:
 ● Admin sistemi yönetir:
 ○ Ürün ekleme, silme ve stok güncelleme işlemlerini yapar.
@@ -36,12 +38,16 @@ Stok Yönetimi:
 ● Her ürün başlangıçta sistem tarafından sabit bir stok miktarı ile tanımlanır.
 ● Mağazada başlangıçta 5 farklı ürün bulunmaktadır ve ürünlere ait bilgiler aşağıdaki
 tabloda verilmiştir:
+
+
 ProductID ProductName Stock Price (TL)
 1 Product1 500 100
 2 Product2 10 50
 3 Product3 200 45
 4 Product4 75 75
 5 Product5 0 500
+
+
 ● Admin yeni ürünler ekleyebilir veya mevcut ürünleri silebilir.
 ● Admin, stok miktarlarını artırabilir veya azaltabilir.
 ● Ürün stokları satın almadan dolayı eş zamanlı olarak birden fazla müşteri tarafından
@@ -70,19 +76,27 @@ sonra admin tarafından siparişin onaylanmasına kadar geçen süreyi ifade ede
 ○ Bekleme Süresi Ağırlığı: Bekleme süresinin etkisini belirler. Her bir saniye
 bekleme süresinin ağırlığı 0.5 puandır.
 ○ Her işlem sırasında sıralama, dinamik olarak yeniden hesaplanmalıdır.
+
+
+
 Veritabanı:
 ● Veritabanında olması beklenen minimum tablolar ve attributeleri aşağıda verilmiştir:
 ○ Customers: CustomerID, CustomerName, Budget, CustomerType, TotalSpent
 ○ Products: ProductID, ProductName, Stock, Price
 ○ Orders: OrderID, CustomerID, ProductID, Quantity, TotalPrice, OrderDate,
+
+
 OrderStatus
 ○ Logs: LogID, CustomerID, OrderID, LogDate, LogType, LogDetails.
+
+
 Loglama ve İzleme:
 ● Her işlem başladığında, işlem hakkında bir log kaydedilir.
 ● Log kaydı hem müşteri hem de admin işlemleri için tutulmalıdır.
 ● Loglar, işlem sırasına göre oluşturulmalıdır.
 ● Her log kaydı aşağıdaki bilgileri içermelidir:
 ○ Log ID
+
 ○ Müşteri ID
 ○ Log türü: “Hata”, “Uyarı”, “Bilgilendirme”
 ○ Müşteri türü: Premium veya Standard
@@ -91,6 +105,8 @@ Loglama ve İzleme:
 ○ İşlem (satın alma) sonucu: İşlem başarıyla tamamlanmışsa işlem sonucu
 olarak "Satın alma başarılı" kaydedilir. Eğer işlem başarısız olursa aşağıdaki
 hata mesajlarından uygun olan mesaj kaydedilir.
+
+
 Bazı Hata Mesajı Türleri:
 ○ “Ürün stoğu yetersiz”: Bir müşteri satın alma işlemine başvurduğunda, ürün
 stoğunun yeterli olmaması durumunda tetiklenir.
@@ -100,6 +116,8 @@ tetiklenir.
 fiyatını karşılamıyorsa tetiklenir.
 ○ “Veritabanı Hatası”: Bağlantı sorunları veya işlem sırasında oluşan
 deadlock'lar gibi durumlarda tetiklenir.
+
+
 ● Log Kaydı Örneği:
 ○ Log ID: 4
 ○ Müşteri ID: 1
@@ -109,8 +127,11 @@ deadlock'lar gibi durumlarda tetiklenir.
 ○ Satın Alınan Miktar: 5
 ○ İşlem Zamanı: 2024-11-28 14:32
 ○ İşlem Sonucu: Ürün stoğu yetersiz
+
+
 UI Entegrasyonu:
 ● Müşteri Paneli
+
 ○ Müşteri Listesi:
 ■ Tabloda CustomerID, Ad, Tür (Premium/Normal), Bütçe, Bekleme
 Süresi, Öncelik Skoru gibi bilgileri gösterin.
@@ -120,14 +141,21 @@ yapmasına izin verin.
 ○ Bekleme Durumu:
 ■ Her müşterinin sipariş sırasındaki durumu (bekliyor, işleniyor,
 tamamlandı) renklendirme ile görselleştirilebilir.
+
+
+
 ● Ürün Stok Durumu Paneli
 ○ Ürün Tablosu:
 ■ Ürün Adı, Stok Miktarı, Fiyat gibi bilgiler tablo halinde gösterilir.
 ■ Stok miktarları her işlem sonrası güncellenir.
+
+
 ○ Grafik Temsili:
 ■ Bar veya dairesel grafik ile stok durumu görselleştirilebilir.
 ■ Stok kritik seviyeye geldiğinde renk değiştiren bir grafik ile görsel
 uyarı eklenebilir.
+
+
 ● Log Paneli
 ○ Gerçek zamanlı loglama ile her işlemin sonucunu listeler:
 ■ Örneğin: "Müşteri 1, Product3'ten 2 adet aldı. İşlem Başarılı."
@@ -148,6 +176,8 @@ ver butonuna bastığında gerçekleşir.)
 onayladığında gerçekleşir.)
 - …
 - Müşteri 4’ün siparişi stok yetersizliğinden iptal edildi.
+
+
 ● Dinamik Öncelik ve Bekleme Paneli
 ○ Bekleme Süresi ve Öncelik Skoru bir tabloda gösterilir ve her işlemde
 güncellenir.
@@ -183,12 +213,14 @@ Kullanıcılar, onaylanan siparişlerini "Siparişlerim" sayfasında, process ba
 Admin Paneli:
 Admin paneli üzerinden, logs kısmında yapılan işlemler canlı olarak izlenebilmektedir. Burada da anlık iletişim sağlamak için WebSocket kullanılmıştır.
 
-Görseller:
-Aşağıda, projemizin kullanıcı arayüzüne ait birkaç ekran görüntüsü yer almaktadır:
-![Admin main menuye ait bir görsel.Bu görselin sağ tarafında web socket ile dinamik logu sağladık ve aynı anda tüm siparişleri onaylayıp silebilmek için butonlar ekledik.](https://github.com/Melissportakall/Web-ThreadProject/blob/main/Ekran%20Resmi%202025-01-22%2013.23.39.png)
+![Admin ana menüye ait bir görsel](https://github.com/Melissportakall/Web-ThreadProject/blob/main/Ekran%20Resmi%202025-01-22%2013.23.39.png)
+**Açıklama:** Admin ana menüye ait bir görsel. Bu görselin sağ tarafında WebSocket ile dinamik log sağlanmıştır ve aynı anda tüm siparişleri onaylayıp silebilmek için butonlar eklenmiştir.
 
-![Kullanıcı main menüye ait bir görsel.Burada kullanıcı istediği ürünlerden istediği sayıda sepetine ekleyebilir.Sepet admin onaylamadan işleme alınmaz.Ürünlerin toplam stoğunu görebilir eğer stoğu olmayan bir üründen sipariş vermek isterse ürün sepete eklenemez.5 ten fazla ürünü bir kerede sepetine ekleyemez.]( https://github.com/Melissportakall/Web-ThreadProject/blob/main/Ekran%20Resmi%202025-01-22%2013.26.10.png)
+![Kullanıcı ana menüye ait bir görsel](https://github.com/Melissportakall/Web-ThreadProject/blob/main/Ekran%20Resmi%202025-01-22%2013.26.10.png)
+**Açıklama:** Kullanıcı ana menüye ait bir görsel. Burada kullanıcı, istediği ürünlerden istediği sayıda sepetine ekleyebilir. Sepet, admin onaylamadan işleme alınmaz. Ürünlerin toplam stoğunu görebilir. Eğer stoğu olmayan bir üründen sipariş vermek isterse ürün sepete eklenemez. Bir kerede 5'ten fazla ürün sepetine ekleyemez.
 
 ![Diğer log ekranı](https://github.com/Melissportakall/Web-ThreadProject/blob/main/Ekran%20Resmi%202025-01-22%2012.58.07.png)
+**Açıklama:** Diğer log ekranı.
 
 ![Projeye ait akış diyagramı](https://github.com/Melissportakall/Web-ThreadProject/blob/main/Ekran%20Resmi%202024-12-29%2014.38.42.png)
+**Açıklama:** Projeye ait akış diyagramı.
