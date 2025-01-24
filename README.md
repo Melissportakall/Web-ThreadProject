@@ -185,3 +185,10 @@ Admin paneli üzerinden, logs kısmında yapılan işlemler canlı olarak izlene
 
 Görseller:
 Aşağıda, projemizin kullanıcı arayüzüne ait birkaç ekran görüntüsü yer almaktadır:
+![Admin main menuye ait bir görsel.Bu görselin sağ tarafında web socket ile dinamik logu sağladık ve aynı anda tüm siparişleri onaylayıp silebilmek için butonlar ekledik.](https://github.com/Melissportakall/Web-ThreadProject/blob/main/Ekran%20Resmi%202025-01-22%2013.23.39.png)
+
+![Kullanıcı main menüye ait bir görsel.Burada kullanıcı istediği ürünlerden istediği sayıda sepetine ekleyebilir.Sepet admin onaylamadan işleme alınmaz.Ürünlerin toplam stoğunu görebilir eğer stoğu olmayan bir üründen sipariş vermek isterse ürün sepete eklenemez.5 ten fazla ürünü bir kerede sepetine ekleyemez.]( https://github.com/Melissportakall/Web-ThreadProject/blob/main/Ekran%20Resmi%202025-01-22%2013.26.10.png)
+
+![Diğer log ekranı](https://github.com/Melissportakall/Web-ThreadProject/blob/main/Ekran%20Resmi%202025-01-22%2012.58.07.png)
+
+![Projeye ait akış diyagramı](https://github.com/Melissportakall/Web-ThreadProject/blob/main/Ekran%20Resmi%202024-12-29%2014.38.42.png)
