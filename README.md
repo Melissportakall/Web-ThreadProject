@@ -115,18 +115,7 @@ python3 -m unittest discover -s tests -p 'test_*.py'
 
 The GitHub Actions workflow runs the backend unit tests on pushes to `main` and on pull requests.
 
-## Deployment and security notes
 
-The Compose setup is intended for local development, not as a complete public production deployment. Before exposing the application publicly:
-
-- Use production secret management and unique, rotated secrets.
-- Serve the application over HTTPS and configure `CORS_ORIGINS` to the exact trusted frontend origin(s).
-- Harden and monitor PostgreSQL and Redis; do not expose their ports publicly.
-- Replace virtual registration budgets with a trusted server-side credit/payment flow before treating orders as real purchases.
-- Review repository history before publishing. If a real secret was ever committed, rotate it and remove it from reachable history before making the repository public.
-- Never publish `.env`, local database files, customer data, or production logs.
-
----
 
 # Türkçe
 
@@ -242,13 +231,3 @@ python3 -m unittest discover -s tests -p 'test_*.py'
 
 GitHub Actions workflow'u `main` branch'ine push ve pull request'lerde backend unit testlerini çalıştırır.
 
-## Deployment ve güvenlik notları
-
-Compose kurulumu yerel geliştirme içindir; public production deployment için tek başına yeterli değildir. Uygulamayı internete açmadan önce:
-
-- Production secret yönetimi kullanın; benzersiz secret'lar belirleyin ve gerektiğinde yenileyin.
-- HTTPS kullanın ve `CORS_ORIGINS` değerini yalnızca güvenilen frontend origin'leriyle sınırlandırın.
-- PostgreSQL ve Redis'i güvenli şekilde yapılandırıp izleyin; portlarını public olarak açmayın.
-- Siparişler gerçek alışverişi temsil edecekse sanal kayıt bakiyesini güvenilir, sunucu taraflı kredi/ödeme akışıyla değiştirin.
-- Public etmeden önce Git geçmişini inceleyin. Gerçek bir secret geçmişte commit edildiyse secret'ı yenileyin ve repoyu public yapmadan önce erişilebilir geçmişten temizleyin.
-- `.env`, yerel veritabanı dosyaları, müşteri verileri veya production loglarını paylaşmayın.
