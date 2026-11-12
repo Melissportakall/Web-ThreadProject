@@ -1,132 +1,69 @@
 import React, { useEffect, useState } from 'react';
-import Modal from 'react-modal';
-import { io } from 'socket.io-client';
-import orderStyles from '../AdminLogs/AdminLogs.module.css';
-import SideMenu from '../SideMenu/SideMenu';
-
-const socket = io('http://127.0.0.1:3000');
+import Navbar from '../NavBar/Navbar';
+import { apiRequest } from '../../api';
 
 const MyOrders = () => {
   const [orders, setOrders] = useState([]);
-  const [selectedOrder, setSelectedOrder] = useState(null);
-  const [progress, setProgress] = useState(0);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const customerId = getUserDataFromCookies();
-
-  const openModal = (order) => {
-    setSelectedOrder(order);
-    setProgress(0);
-    setModalIsOpen(true);
-    console.log('Requesting order status for:', order.OrderID);
-    socket.emit('order_status', { order_id: order.OrderID });
-  };
-
-  const closeModal = () => {
-    setModalIsOpen(false);
-    setSelectedOrder(null);
-    setProgress(0);
-  };
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const handleOrderUpdate = (data) => {
-      console.log('Order update received:', data);
-      if (selectedOrder && data.order_id === selectedOrder.OrderID) {
-        setProgress(data.progress);
-        if (data.status === 'Completed') {
-          setProgress(100);
-        }
-      }
-    };
-
-    socket.on('order_updated', handleOrderUpdate);
-
-    return () => {
-      socket.off('order_updated', handleOrderUpdate);
-    };
-  }, [selectedOrder]);
-
-  useEffect(() => {
-    if (customerId) {
-      fetch(`/orders/${customerId}`)
-        .then((response) => response.json())
-        .then((data) => setOrders(data.orders))
-        .catch((error) => console.error('Error fetching orders:', error));
-    }
-  }, [customerId]);
+    document.title = 'My Orders';
+    apiRequest('/orders/me')
+      .then((data) => setOrders(Array.isArray(data) ? data : []))
+      .catch(() => setOrders([]))
+      .finally(() => setLoading(false));
+  }, []);
 
   return (
-    <div className="my-orders">
-      <h1>THREADYOL</h1>
-      <div className="sidebar">
-        <SideMenu />
-      </div>
-      <div className={orderStyles.container}>
-        <h1>My Orders</h1>
-        {orders.length > 0 ? (
-          <table className={orderStyles.table}>
-            <thead>
-              <tr>
-                <th>Order ID</th>
-                <th>Product ID</th>
-                <th>Quantity</th>
-                <th>Total Price</th>
-                <th>Order Date</th>
-                <th>Order Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {orders.map((order) => (
-                <tr key={order.OrderID} onClick={() => openModal(order)}>
-                  <td>{order.OrderID}</td>
-                  <td>{order.ProductID}</td>
-                  <td>{order.Quantity}</td>
-                  <td>{order.TotalPrice} TL</td>
-                  <td>{order.OrderDate}</td>
-                  <td>{order.OrderStatus}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        ) : (
-          <p>No orders found.</p>
-        )}
-      </div>
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        contentLabel="Order Progress"
-        ariaHideApp={false}
-        className={orderStyles.modal}
-      >
-        <h2>Order Progress</h2>
-        {selectedOrder && <p>Order ID: {selectedOrder.OrderID}</p>}
-        <div className={orderStyles.progressBar}>
-          <div
-            style={{
-              width: `${progress}%`,
-              backgroundColor: progress === 100 ? 'green' : 'blue',
-              height: '20px',
-              transition: 'width 0.5s ease-in-out',
-            }}
-          >
-            {progress}%
-          </div>
+    <>
+      <Navbar />
+      <div style={{ minHeight: '100vh', background: 'linear-gradient(180deg, #dfe8ff 0%, #edf4ff 100%)', padding: '28px 20px' }}>
+        <div style={{ maxWidth: '1000px', margin: '0 auto', background: 'rgba(255,255,255,0.8)', borderRadius: '24px', padding: '28px', boxShadow: '0 20px 42px rgba(32, 50, 94, 0.12)' }}>
+          <h1 style={{ margin: '0 0 20px', color: '#101827' }}>My Orders</h1>
+
+          {loading ? (
+            <p>Loading your orders...</p>
+          ) : orders.length === 0 ? (
+            <p>No orders yet.</p>
+          ) : (
+            <div style={{ overflowX: 'auto' }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse', background: '#fff' }}>
+                <thead>
+                  <tr style={{ background: '#edf3ff' }}>
+                    <th style={cellStyle}>Order ID</th>
+                    <th style={cellStyle}>Product ID</th>
+                    <th style={cellStyle}>Qty</th>
+                    <th style={cellStyle}>Total</th>
+                    <th style={cellStyle}>Status</th>
+                    <th style={cellStyle}>Created</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {orders.map((order) => (
+                    <tr key={order.id}>
+                      <td style={cellStyle}>{order.id}</td>
+                      <td style={cellStyle}>{order.product_id}</td>
+                      <td style={cellStyle}>{order.quantity}</td>
+                      <td style={cellStyle}>${order.total_price}.00</td>
+                      <td style={cellStyle}>{order.status}</td>
+                      <td style={cellStyle}>{new Date(order.created_at).toLocaleString()}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
-        <button onClick={closeModal}>Close</button>
-      </Modal>
-    </div>
+      </div>
+    </>
   );
 };
 
-const getUserDataFromCookies = () => {
-  const cookies = document.cookie.split('; ');
-  for (let cookie of cookies) {
-    const [key, value] = cookie.split('=');
-    if (key === 'user_data') {
-      return JSON.parse(decodeURIComponent(value));
-    }
-  }
-  return null;
+const cellStyle = {
+  border: '1px solid #e2e8f0',
+  padding: '12px 14px',
+  textAlign: 'left',
+  color: '#1f2937',
 };
 
 export default MyOrders;

@@ -5,7 +5,7 @@ import LoginForm from './Components/LoginForm/LoginForm.jsx';
 import RegisterForm from './Components/LoginRegister/RegisterForm';
 import MainMenu from './Components/MainMenu/MainMenu';
 import AuthGuard from './Components/AuthGuard/AuthGuard';
-import { AdminMainMenu } from './Components/AdminMainMenu/AdminMainMenu.jsx';
+import AdminMainMenu from './Components/AdminMainMenu/AdminMainMenu.jsx';
 import AdminAllProducts from './Components/AdminAllProducts/AdminAllProducts';
 import AdminLogs from './Components/AdminLogs/AdminLogs'
 import Logs from './Components/Logs/Logs.jsx';
@@ -14,6 +14,7 @@ import Cart from './Components/Cart/Cart';
 import MyOrders from './Components/MyOrders/MyOrders';
 import LogOut from './Components/LogOut/LogOut';
 import AdminAllCustomers from './Components/AdminAllCustomers/AdminAllCustomers';
+import ProductDetail from './Components/ProductDetail/ProductDetail';
 
 function App() {
   useEffect(() => {
@@ -48,6 +49,7 @@ function App() {
             <AuthGuard>
               <Routes>
                 <Route path="/mainmenu" element={<MainMenu />} />
+                <Route path="/product/:id" element={<ProductDetail />} />
                 <Route path="/view-profile" element={<ViewProfile />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/my-orders" element={<MyOrders />} />

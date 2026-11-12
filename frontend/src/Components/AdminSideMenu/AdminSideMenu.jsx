@@ -1,31 +1,54 @@
 import React from 'react';
-import styles from './AdminSideMenu.module.css'; 
-import { Link } from 'react-router-dom';
-import {useNavigate } from 'react-router-dom';
+import styles from './AdminSideMenu.module.css';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { FiActivity, FiBox, FiGrid, FiLogOut, FiUsers } from 'react-icons/fi';
 
 const SideMenu = () => {
-    
-    const navigate = useNavigate(); 
+  const navigate = useNavigate();
+  const links = [
+    { to: '/admin-mainmenu', label: 'Dashboard', icon: FiGrid },
+    { to: '/admin-all-customers', label: 'Customers', icon: FiUsers },
+    { to: '/admin-all-products', label: 'Products', icon: FiBox },
+    { to: '/admin-logs', label: 'System logs', icon: FiActivity },
+  ];
 
-    const handleLogout = () => {
-        navigate('/logout'); 
-    };
-    
-    return (
-        <div className={styles.sideMenu}>
-            <ul>
+  const handleLogout = () => {
+    navigate('/logout');
+  };
 
-                 <li><Link to="/admin-mainmenu" className={styles.link}>Ana Sayfa</Link></li>
-                <li><Link to="/admin-all-customers" className={styles.link}>Tüm Kullanıcılar</Link></li>
-                <li><Link to="/admin-all-products" className={styles.link}>Tüm Ürünler</Link></li>
-                <li><Link to="/admin-logs" className={styles.link}>Kayıtlı Loglar</Link></li>
-                <li>
-                    <button onClick={handleLogout} className={styles.button}>Log Out</button>
-                </li>
-            
-            </ul>
+  return (
+    <aside className={styles.sideMenu}>
+      <div className={styles.brandBox}>
+        <span className={styles.brandMark}>B</span>
+        <span><strong>BLUE</strong><small>CONTROL CENTER</small></span>
+      </div>
+
+      <ul className={styles.menuList}>
+        {links.map(({ to, label, icon: Icon }) => (
+          <li key={to}>
+            <NavLink
+              to={to}
+              className={({ isActive }) => `${styles.link} ${isActive ? styles.activeLink : ''}`}
+            >
+              <Icon aria-hidden="true" />
+              <span>{label}</span>
+            </NavLink>
+          </li>
+        ))}
+      </ul>
+
+      <div className={styles.sidebarFooter}>
+        <div className={styles.adminProfile}>
+          <span className={styles.avatar}>A</span>
+          <span><strong>Administrator</strong><small>Store management</small></span>
         </div>
-    );
+        <button onClick={handleLogout} className={styles.button}>
+          <FiLogOut aria-hidden="true" />
+          <span>Sign out</span>
+        </button>
+      </div>
+    </aside>
+  );
 };
 
 export default SideMenu;

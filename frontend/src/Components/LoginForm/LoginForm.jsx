@@ -2,17 +2,19 @@ import React, { useState, useEffect } from "react";
 import styles from "./LoginForm.module.css";
 import { FaUser, FaUnlockAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { apiRequest } from '../../api';
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [userData, setUserData] = useState("");
   const [error, setError] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
 
   const clearSessionCookies = () => {
-    document.cookie = "user_data=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = "user_data=; expires=Thu, 01 Jan 1970 00:00: 00 UTC; path=/;";
+    localStorage.removeItem("threadyol_token");
+    localStorage.removeItem("threadyol_user_role");
   };
 
   useEffect(() => {
@@ -26,12 +28,10 @@ const LoginForm = () => {
       return acc;
     }, {});
 
-    if (cookies.remember_me === "true") {
-      if (userData.is_admin) {
-        navigate('/admin-mainmenu');
-      } else {
-        navigate('/mainmenu');
-      }
+    const token = localStorage.getItem("threadyol_token");
+
+    if ((cookies.remember_me === "true" || token) && token) {
+      navigate('/mainmenu');
     } else {
       clearSessionCookies();
     }
@@ -40,37 +40,22 @@ const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const formData = {
-        username: username,
-        password: password,
-      };
-
-      const response = await fetch("/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-        credentials: "include",
+      const data = await apiRequest('/auth/login', {
+        method: 'POST',
+        body: JSON.stringify({ username, password }),
       });
 
-      const data = await response.json();
-      if (data.success) {
-        if (rememberMe) {
-          document.cookie = `remember_me=true; path=/; max-age=${60 * 60 * 24 * 30}`;
-        }
+      localStorage.setItem('threadyol_token', data.access_token);
+      localStorage.setItem('threadyol_user_role', data.user.role);
+      document.cookie = `remember_me=${rememberMe ? 'true' : 'false'}; path=/; max-age=${60 * 60 * 24 * 30}`;
 
-        setUserData(data);
-
-        if (data.is_admin) {
-          navigate('/admin-mainmenu');
-        } else {
-          navigate('/mainmenu');
-        }
-
+      if (data.user.role === 'admin') {
+        navigate('/admin-mainmenu');
       } else {
-        setError(data.message || "Invalid username or password");
+        navigate('/mainmenu');
       }
-    } catch (error) {
-      console.error("Error:", error);
+    } catch (err) {
+      setError(err.message || 'Invalid username or password');
     }
   };
 
@@ -108,20 +93,13 @@ const LoginForm = () => {
             />
             Remember me
           </label>
-          <a href="#" id="loginForgotPassword">
-            Forgot password?
-          </a>
+          <button type="button" className={styles.forgotLink} id="loginForgotPassword">Forgot password?</button>
         </div>
         <button className={styles.button} type="submit">Login</button>
         <div className={styles.register_link}>
           <p>
-            Don't have an account?{" "}
-            <span
-              onClick={() => navigate("/register")}
-              style={{ cursor: "pointer" }}
-            >
-              Register Here
-            </span>
+            Don't have an account?
+            <span onClick={() => navigate('/register')} style={{ cursor: 'pointer' }}> Register Here</span>
           </p>
         </div>
       </form>

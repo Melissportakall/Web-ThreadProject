@@ -1,0 +1,197 @@
+openapi: 3.0.3
+info:
+  title: THREADYOL API
+  version: 1.0.0
+  description: OpenAPI contract for the dynamic-priority order processing system.
+servers:
+  - url: http://localhost:8000/api/v1
+tags:
+  - name: auth
+    description: Authentication and user identity endpoints.
+  - name: orders
+    description: Order creation and processing endpoints.
+  - name: monitoring
+    description: Health and runtime diagnostics.
+paths:
+  /health:
+    get:
+      tags: [monitoring]
+      summary: Liveness check
+      responses:
+        '200':
+          description: Service is alive.
+  /ready:
+    get:
+      tags: [monitoring]
+      summary: Readiness check
+      responses:
+        '200':
+          description: Database is reachable.
+        '503':
+          description: Dependency not ready.
+  /auth/register:
+    post:
+      tags: [auth]
+      summary: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+      responses:
+        '201':
+          description: User created.
+        '409':
+          description: Username is already in use.
+  /auth/login:
+    post:
+      tags: [auth]
+      summary: Login and receive JWT
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: JWT returned.
+  /auth/me:
+    get:
+      tags: [auth]
+      summary: Fetch current authenticated user profile
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Current user profile.
+  /orders:
+    post:
+      tags: [orders]
+      summary: Create order
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrderRequest'
+      responses:
+        '201':
+          description: Order created in PENDING state and queued.
+  /orders/me:
+    get:
+      tags: [orders]
+      summary: List my orders
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: All orders for current user.
+  /orders/queue:
+    get:
+      tags: [orders]
+      summary: See current queue snapshot
+      description: Administrator-only queue including customer and order details.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Queue entries with priority scores.
+        '401':
+          description: Authentication required.
+        '403':
+          description: Administrator privileges required.
+  /orders/process-next:
+    post:
+      tags: [orders]
+      summary: Process the highest priority order
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Processing outcome for the next order.
+        '401':
+          description: Authentication required.
+        '403':
+          description: Administrator privileges required.
+  /customers:
+    get:
+      tags: [auth]
+      summary: List customers (administrator only)
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Customer list.
+        '401':
+          description: Authentication required.
+        '403':
+          description: Administrator privileges required.
+  /orders/{orderId}:
+    get:
+      tags: [orders]
+      summary: Fetch a single order by id
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: orderId
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Current order details.
+  /logs:
+    get:
+      tags: [monitoring]
+      summary: Fetch logs for current user or admin
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Log collection.
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    RegisterRequest:
+      type: object
+      required: [username, password]
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+          format: password
+        name:
+          type: string
+        surname:
+          type: string
+        budget:
+          type: integer
+    LoginRequest:
+      type: object
+      required: [username, password]
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+          format: password
+    CreateOrderRequest:
+      type: object
+      required: [product_id, quantity]
+      properties:
+        product_id:
+          type: integer
+        quantity:
+          type: integer
+          minimum: 1
+          maximum: 5

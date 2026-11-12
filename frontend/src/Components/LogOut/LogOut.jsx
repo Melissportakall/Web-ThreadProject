@@ -7,6 +7,8 @@ export const LogOut = () => {
   useEffect(() => {
     document.cookie = `user_data=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
     document.cookie = `remember_me=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+    localStorage.removeItem('threadyol_token');
+    localStorage.removeItem('threadyol_user_role');
 
     const timeout = setTimeout(() => {
       navigate('/login');

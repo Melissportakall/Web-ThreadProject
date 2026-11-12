@@ -1,49 +1,187 @@
-
-
 .sideMenu {
-    background-color: #2c3e50;
-    width: 250px;
-    height: 100vh;
-    padding: 30px;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex: 0 0 252px;
+  flex-direction: column;
+  width: 252px;
+  height: 100vh;
+  padding: 25px 16px 18px;
+  background: linear-gradient(180deg, #101b35 0%, #142544 100%);
+  color: #eaf0ff;
+  box-shadow: 8px 0 28px rgba(17, 31, 58, 0.1);
+}
+
+.brandBox {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 8px 25px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.brandBox > span:last-child,
+.adminProfile > span:last-child {
+  display: grid;
+  gap: 4px;
+}
+
+.brandBox strong {
+  color: #fff;
+  font-size: 0.88rem;
+  letter-spacing: 0.13em;
+}
+
+.brandBox small {
+  color: #8fa0c1;
+  font-size: 0.59rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.brandMark {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #4b79ff 0%, #2ca9e8 100%);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 800;
+  box-shadow: 0 7px 16px rgba(49, 112, 239, 0.25);
+}
+
+.menuList {
+  display: grid;
+  gap: 7px;
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.menuList li {
+  margin: 0;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-radius: 11px;
+  padding: 12px 13px;
+  color: #aebbd2;
+  font-size: 0.84rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.18s ease, background 0.18s ease, transform 0.18s ease;
+}
+
+.link svg,
+.button svg {
+  flex: 0 0 auto;
+  font-size: 1.05rem;
+}
+
+.link:hover {
+  background: rgba(255, 255, 255, 0.07);
+  color: #fff;
+  transform: translateX(2px);
+}
+
+.activeLink {
+  background: linear-gradient(90deg, rgba(69, 111, 237, 0.28), rgba(69, 111, 237, 0.11));
+  color: #fff;
+  box-shadow: inset 3px 0 #6690ff;
+}
+
+.sidebarFooter {
+  display: grid;
+  gap: 15px;
+  margin-top: auto;
+}
+
+.adminProfile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.09);
+  padding: 18px 5px 5px;
+}
+
+.avatar {
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #e6ecff;
+  color: #355ac2;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.adminProfile strong {
+  color: #edf2ff;
+  font-size: 0.72rem;
+}
+
+.adminProfile small {
+  color: #8fa0c1;
+  font-size: 0.63rem;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.045);
+  color: #c3cee2;
+  padding: 10px 12px;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+
+.button:hover {
+  background: rgba(239, 97, 114, 0.13);
+  color: #fff;
+}
+
+@media (max-width: 720px) {
+  .sideMenu {
+    position: static;
+    width: 100%;
+    height: auto;
+    padding: 12px 16px;
+  }
+
+  .brandBox {
+    padding: 2px 6px 12px;
+  }
+
+  .menuList {
     display: flex;
-    flex-direction: column;
+    gap: 5px;
+    overflow-x: auto;
+    margin-top: 12px;
+    padding-bottom: 2px;
   }
-  
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  li {
-    margin: 35px 0;
-  }
-  
-  .button {
-    font-size: 25px;
-    background-color: #e74c3c;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .button:hover {
-    background-color: #c0392b;
-  }
-  
+
   .link {
-    font-size :25px;
-    color: #ecf0f1;
-    text-decoration: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    transition: background-color 0.3s; 
+    white-space: nowrap;
+    padding: 9px 10px;
+    font-size: 0.75rem;
   }
-  
-  .link:hover {
-    background-color: #34495e; 
+
+  .sidebarFooter {
+    display: none;
   }
-  
+}

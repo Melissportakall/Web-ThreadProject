@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styles from './PendingOrders.module.css';
 
 const PendingOrders = ({ refresh, setNoPendingOrders }) => {
   const [orders, setOrders] = useState([]);
 
-  const fetchPendingOrders = async () => {
+  const fetchPendingOrders = useCallback(async () => {
     try {
       const response = await fetch('/get_pending_orders');
       if (response.ok) {
         const data = await response.json();
         setOrders(data.orders);
         console.log('Ürünler alındı:', data);
-        
+
         setNoPendingOrders(data.orders.length === 0);
       } else {
         console.error('Veriler alınamadı:', response.statusText);
@@ -19,11 +19,11 @@ const PendingOrders = ({ refresh, setNoPendingOrders }) => {
     } catch (error) {
       console.error('Hata oluştu:', error);
     }
-  };
+  }, [setNoPendingOrders]);
 
   useEffect(() => {
     fetchPendingOrders();
-  }, [refresh]);
+  }, [fetchPendingOrders, refresh]);
 
   return (
     <div className={styles.container}>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './AdminLogs.module.css';
 import AdminSideMenu from '../AdminSideMenu/AdminSideMenu';
+import { apiRequest } from '../../api';
 
 const Logs = () => {
   const [logs, setLogs] = useState([]);
@@ -8,15 +9,11 @@ const Logs = () => {
 
   const fetchLogs = async () => {
     try {
-      const response = await fetch('/all-logs');
-      if (response.ok) {
-        const data = await response.json();
-        setLogs(data.logs);
-      } else {
-        console.error('Veriler alınamadı:', response.statusText);
-      }
+      const data = await apiRequest('/logs');
+      setLogs(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error('Hata oluştu:', error);
+      setLogs([]);
     } finally {
       setLoading(false);
     }
@@ -27,44 +24,43 @@ const Logs = () => {
   }, []);
 
   return (
-    <div className='admin-logs'>
-        <h1>THREADYOL</h1>
-        <div className="sidebar">
-            <AdminSideMenu />
-        </div>
-        <div className={styles.container}>
-          <h1>Log Listesi</h1>
+    <div style={{ display: 'flex', minHeight: '100vh', background: '#f3f6fc' }}>
+      <AdminSideMenu />
+      <main style={{ flex: 1, minWidth: 0, padding: '32px', overflowX: 'auto' }}>
+        <h1>System Logs</h1>
+        <div className={styles.container} style={{ maxWidth: 'none', margin: 0, textAlign: 'left' }}>
           {loading ? (
-              <p>Yükleniyor...</p>
+            <p>Loading...</p>
           ) : logs.length > 0 ? (
-              <table className={styles.table}>
+            <table className={styles.table}>
               <thead>
-                  <tr>
+                <tr>
                   <th>Log ID</th>
-                  <th>Müşteri ID</th>
-                  <th>Sipariş ID</th>
-                  <th>Tarih ve Saat</th>
-                  <th>Tür</th>
-                  <th>Detay</th>
-                  </tr>
+                  <th>Customer ID</th>
+                  <th>Order ID</th>
+                  <th>Date</th>
+                  <th>Type</th>
+                  <th>Details</th>
+                </tr>
               </thead>
               <tbody>
-                  {logs.map((log) => (
-                  <tr key={log.LogID}>
-                      <td>{log.LogID}</td>
-                      <td>{log.CustomerID}</td>
-                      <td>{log.OrderID}</td>
-                      <td>{log.LogDate}</td>
-                      <td>{log.LogType}</td>
-                      <td>{log.LogDetails}</td>
+                {logs.map((log) => (
+                  <tr key={log.id}>
+                    <td>{log.id}</td>
+                    <td>{log.customer_id ?? '-'}</td>
+                    <td>{log.order_id ?? '-'}</td>
+                    <td>{new Date(log.created_at).toLocaleString()}</td>
+                    <td>{log.log_type}</td>
+                    <td>{log.log_details}</td>
                   </tr>
-                  ))}
+                ))}
               </tbody>
-              </table>
+            </table>
           ) : (
-              <p>Log bulunamadı.</p>
+            <p>No logs found.</p>
           )}
         </div>
+      </main>
     </div>
   );
 };
